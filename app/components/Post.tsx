@@ -2,7 +2,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-export default function Posts({ name, avatar, postTitle, id}) {
+export default function Posts({ name, avatar, postTitle, id, comments }) {
     return (
         <div className="bg-white my-8 p-8 rounded-lg">
             <div className="flex items-center gap-2">
@@ -20,9 +20,11 @@ export default function Posts({ name, avatar, postTitle, id}) {
             </div>
             <div className="flex gap-4 cursor-pointer items-center">
                 <Link href={`/post/${id}`}>
-                    <p className="text-sm font-bold text-gray-700">Comments</p>
+                    <p className="text-sm font-bold text-gray-700">
+                        {comments.length} Comments
+                    </p>
                 </Link>
             </div>
         </div>
-    )
+    );
 }
