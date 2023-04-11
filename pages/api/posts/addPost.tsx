@@ -34,9 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     userId: prismaUser?.id,
                 }
             })
-            return res.status(200).json(result)
+            res.status(200).json(result)
         } catch (err) {
-            return res.status(403).json({ err: "Error has occured whilst making a post" })
+            res.status(403).json({ err: "Error has occured whilst making a post" })
         }
     }
 }

@@ -5,34 +5,33 @@ import axios, { AxiosError } from "axios"
 import toast from "react-hot-toast"
 
 export default function CreatePost() {
-    const [title, setTitle] = useState('')
-    const [isDisabled, setIsDisabled] = useState(false)
-    let toastPostID: string
+    const [title, setTitle] = useState("");
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [toastPostID, setToastPostID] = useState<string | undefined>();
 
-    // Create a Post
     const { mutate } = useMutation(
-        async (title: string) =>
-            await axios.post("/api/posts/addPost", { title }),
+        async (title: string) => await axios.post("/api/posts/addPost", { title }),
         {
             onError: (error) => {
-                if(error instanceof AxiosError) {
-                    toast.error(error?.response?.data.message, {id: toastPostID})
+                if (error instanceof AxiosError) {
+                    toast.error(error?.response?.data.message, { id: toastPostID });
                 }
-                setIsDisabled(false)
+                setIsDisabled(false);
             },
             onSuccess: (data) => {
-                toast.success("Post created successfully", {id: toastPostID})
-                setTitle('')
-                setIsDisabled(false)
-            }
+                toast.success("Post created successfully", { id: toastPostID });
+                setTitle("");
+                setIsDisabled(false);
+            },
         }
-    )
+    );
 
     const submitPost = async (e: React.FormEvent) => {
         e.preventDefault();
-        toastPostID = toast.loading("Creating a post...", {id: toastPostID});
+        setToastPostID(toast.loading("Creating a post..."));
         setIsDisabled(true);
         mutate(title);
+        setIsDisabled(false);
     };
 
     return (
